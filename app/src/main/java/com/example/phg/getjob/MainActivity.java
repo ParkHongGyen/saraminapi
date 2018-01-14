@@ -2,6 +2,7 @@ package com.example.phg.getjob;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +72,19 @@ public class MainActivity extends TabActivity {
 
 
 
+    }
+
+    public void pnggo1(View v) //정보처리기사기출 이벤트
+    {
+        Uri uri = Uri.parse("http://www.gunsys.com/cbt_list/index.php?cbt=gisa");//인터넷주소
+        Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
+        startActivity(it);//실행
+    }
+    public void pnggo2(View v) //정보처리기사기출 이벤트
+    {
+        Uri uri = Uri.parse("http://www.q-net.or.kr/crf005.do?id=crf00503&jmCd=1320");//인터넷주소
+        Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
+        startActivity(it);//실행
     }
 
 
