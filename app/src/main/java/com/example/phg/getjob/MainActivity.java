@@ -3,6 +3,7 @@ package com.example.phg.getjob;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +12,29 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.net.URL;
+
 public class MainActivity extends TabActivity {
 
+    Button b1;
+    EditText et1;
+    TextView tv1;
+    NaverSearchTask task;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        b1 = (Button) findViewById(R.id.button1);
+        et1 = (EditText) findViewById(R.id.editText1);
+        tv1 = (TextView) findViewById(R.id.textView1);
+
+
 
 //////////////////////////////////////////////////////////////////////tab host
         TabHost tabHost = getTabHost();//(1)
@@ -36,7 +52,7 @@ public class MainActivity extends TabActivity {
         tabHost.addTab(tabSpec3);
 
         TabSpec tabSpec4 = tabHost.newTabSpec("Tab4").setIndicator("영어사전");
-        tabSpec4.setContent(R.id.content3);
+        tabSpec4.setContent(R.id.content4);
         tabHost.addTab(tabSpec4);
 
         tabHost.setCurrentTab(0);
@@ -69,11 +85,13 @@ public class MainActivity extends TabActivity {
             }
         });
 ////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////네이버 사전
+
 
 
 
     }
-
+///////////////////////////////////////////////////////////////////////
     public void pnggo1(View v) //정보처리기사기출 이벤트
     {
         Uri uri = Uri.parse("http://www.gunsys.com/cbt_list/index.php?cbt=gisa");//인터넷주소
@@ -87,12 +105,75 @@ public class MainActivity extends TabActivity {
         startActivity(it);//실행
     }
 
-
 //////////////////////////////////////////////////saramin액티비티
     public void saramingo(View v){
         Intent it = new Intent(getApplicationContext(), SaraminActivity.class);
         startActivity(it);
     }
+
+    /////////////////////////////////////////////////////////////////////네이버사전
+
+
+    class  NaverSearchTask  extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... strings) {
+            String clientId = "qPRWHkJcumXLFGtvzWo2";//애플리케이션 클라이언트 아이디값";
+            String clientSecret = "yjQBWLhQ50";//애플리케이션 클라이언트 시크릿값";
+            String url = "https://openapi.naver.com/v1/papago/n2mt";
+            XmlPullParserFactory factory;
+            XmlPullParser parser;
+            URL xmlUrl;
+            String returnResult = "";
+            try{
+                boolean flag1 = false;
+                xmlUrl = new URL(url);
+                xmlUrl.openConnection().getInputStream();
+                factory = XmlPullParserFactory.newInstance();
+                parser = factory.newPullParser();
+                parser.setInput(xmlUrl.openStream(), "utf-8");
+                int eventType = parser.getEventType();
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+                        case XmlPullParser.END_DOCUMENT:
+                            break;
+                        case XmlPullParser.START_TAG:
+                            if (parser.getName().equals("title")) {
+                                flag1 = true;
+                            }
+                            break;
+                        case XmlPullParser.END_TAG:
+                            break;
+                        case XmlPullParser.TEXT:
+                            if (flag1 == true) {
+                                returnResult += parser.getText()+"\n";
+                                flag1 = false;
+                            }
+                            break;
+                    }
+                    eventType = parser.next();
+                }
+            } catch (Exception e) {
+
+            }
+
+            return returnResult;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+
+    public void papago(View view) {
+        task = new NaverSearchTask();
+        task.execute(et1.getText().toString());
+        et1.setText("");
+    }
 //////////////////////////////////////////////////
+
 
 }
