@@ -140,7 +140,7 @@ public class MainActivity extends TabActivity {
                         case XmlPullParser.END_DOCUMENT:
                             break;
                         case XmlPullParser.START_TAG:
-                            if (parser.getName().equals("title")) {
+                            if (parser.getName().equals("200")) {
                                 flag1 = true;
                             }
                             break;
