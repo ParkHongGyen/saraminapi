@@ -1,32 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.phg.getjob.MainActivity">
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="정규직"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="70dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!-- TabWidget의 id값이 반드시 "tabs"로 지정되어야 함. -->
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <!-- FrameLayout의 id값이 반드시 "tabcontent"로 지정되어야 함. -->
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- 첫 번째 페이지. 채용정보 -->
+            <LinearLayout
+                android:id="@+id/content1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="계약직"
-        tools:layout_editor_absoluteX="145dp"
-        tools:layout_editor_absoluteY="70dp" />
+                <RadioGroup
+                    android:id="@+id/radiogroup1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CheckBox"
-        tools:layout_editor_absoluteX="260dp"
-        tools:layout_editor_absoluteY="70dp" />
-</android.support.constraint.ConstraintLayout>
+                    <RadioButton
+                        android:id="@+id/rb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="정규직"
+                        android:textSize="18sp"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/rb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="계약직" />
+
+                    <RadioButton
+                        android:id="@+id/rb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="공채" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/searchb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="saramingo"
+                    android:text="검색"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            <!-- 두 번째 페이지. 스케줄 -->
+
+            <LinearLayout
+                android:id="@+id/content2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <!--달력-->
+                    <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal" />
+
+                </LinearLayout>
+                <EditText
+                    android:id="@+id/etLike"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="" />
+
+                <EditText
+                    android:id="@+id/etMemo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/txResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+
+                <Button
+                    android:id="@+id/btadd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="추가" />
+
+                <Button
+                    android:id="@+id/btdel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="삭제" />
+            </LinearLayout>
+
+            <!-- 세 번째 페이지. 자격증 -->
+            <LinearLayout
+                android:id="@+id/content3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1 "
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/png1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="정보처리기사기출문제"
+                        android:onClick="pnggo1"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="25dp"/>
+                    <TextView
+                        android:id="@+id/png2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="정보처리기사일정"
+                        android:onClick="pnggo2"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="25dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <!--네번째 페이지. content4-->
+
+            <LinearLayout
+                android:id="@+id/content4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <EditText
+                        android:id="@+id/editText1"
+                        android:layout_width="182dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10" >
+
+
+                    </EditText>
+
+                    <Button
+                        android:id="@+id/button1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="번역"
+                        android:onClick="papago"/>
+
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignLeft="@+id/linearLayout1"
+                    android:layout_below="@+id/linearLayout1"
+                    android:layout_marginTop="40dp"
+                    android:textSize="18sp"
+                    android:text="" />
+            </LinearLayout>
+
+
+        </FrameLayout>
+    </LinearLayout>
+
+</TabHost>
