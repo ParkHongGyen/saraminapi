@@ -166,34 +166,29 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
                     <EditText
-                        android:id="@+id/editText1"
+                        android:id="@+id/etsource"
                         android:layout_width="182dp"
                         android:layout_height="wrap_content"
                         android:ems="10" >
-
-
                     </EditText>
 
                     <Button
-                        android:id="@+id/button1"
+                        android:id="@+id/bt_translate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:text="번역"
-                        android:onClick="papago"/>
+                        android:text="번역" />
+                    <TextView
+                        android:id="@+id/tv_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/transtv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignLeft="@+id/linearLayout1"
-                    android:layout_below="@+id/linearLayout1"
-                    android:layout_marginTop="40dp"
-                    android:textSize="18sp"
-                    android:text="" />
+
             </LinearLayout>
 
 
