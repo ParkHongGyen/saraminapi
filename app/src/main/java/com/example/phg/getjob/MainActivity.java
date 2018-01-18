@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
 
 public class MainActivity extends TabActivity {
 
@@ -36,6 +37,11 @@ public class MainActivity extends TabActivity {
     Button bttranslate;//번역 버튼
 
     Button sb; //채용정보 검색 버튼튼
+
+    Calendar calendar2;  //D-Day
+    int dYear=0;
+    int dMonth=0;
+    int dDay=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +96,7 @@ public class MainActivity extends TabActivity {
                 txresult.setText( dbHelp.PrintData() );//결과창에띄운다
             }
         });
-////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////번역
 
         tvresult = (TextView)findViewById(R.id.tv_result);
         ettrans = (EditText)findViewById(R.id.etsource);
@@ -109,15 +115,46 @@ public class MainActivity extends TabActivity {
                 NaverTranslateTask asyncTask = new NaverTranslateTask();
                 String sText = ettrans.getText().toString();
                 asyncTask.execute(sText);
-
-
-
             }
         });
+////////////////////////////////////////////////////////선택한 날짜 값 구하기
+       /* calendar2 = Calendar.getInstance();
+        dYear = calendar2.get(Calendar.YEAR);
+        dMonth = calendar2.get(Calendar.MONTH);
+        dDay = calendar2.get(Calendar.DAY_OF_MONTH);*//* 선택 날짜 구하기 *//*
+        public void dateClick(View view) {
+            new DatePickerDialog(MainActivity.this, mDateSetListener, dYear, dMonth, dDay).show();
+        }
+*//*날짜 선택하여 값 계산*//*
+        DatePickerDialog.OnDateSetListener mDateSetListener=new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                dYear=year;
+                dMonth=monthOfYear;
+                dDay=dayOfMonth;
+//날짜값 가져옴
+                calendar2.set(Calendar.YEAR, dYear);
+                calendar2.set(Calendar.MONTH, dMonth);
+                calendar2.set(Calendar.DATE, dDay);
+//시간 분 초 로 나누면 일수로 됨
+                today=calendar.getTimeInMillis()/(24*60*60*1000);
+                dday=calendar2.getTimeInMillis()/(24*60*60*1000);
+                //1일의 값(86400000 = 24시간 * 60분 * 60초 * 1000(1초값))
+
+                result=today-dday; //선택날짜와 오늘날짜 뺌
+                result = result +1;//오늘 부터 1일로 계산
+                resultValue=(int)result;
+
+                UpdateDday();
+            }
+        };*/
 
 
-    } ////////oncreate
+    } ////////////////////////////////////////////////////////oncreate
 
+
+
+    /////////////////////////////////////////////////////////////////번역 클래스
    public class NaverTranslateTask extends AsyncTask<String,Void,String>
    {
        public String resultText;
