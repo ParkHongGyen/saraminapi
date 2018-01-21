@@ -68,6 +68,7 @@
                         android:id="@+id/rb5"
                         android:layout_weight="1"
                         android:textSize="18sp"
+                        android:layout_marginBottom="25dp"
                         android:text="웹개발"/>
                 </RadioGroup>
 
@@ -156,6 +157,8 @@
                         android:layout_centerInParent="true"
                         android:layout_gravity="center"
                         android:textSize="25sp"
+                        android:background="@drawable/back"
+                        android:gravity="center"
                         android:layout_marginBottom="25dp"/>
                     <TextView
                         android:id="@+id/png2"
@@ -163,6 +166,44 @@
                         android:layout_height="wrap_content"
                         android:text="정보처리기사일정"
                         android:onClick="pnggo2"
+                        android:background="@drawable/back"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:textSize="25sp"
+                        android:gravity="center"
+                        android:layout_marginBottom="25dp"/>
+                    <TextView
+                        android:id="@+id/png3"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/back"
+                        android:layout_height="wrap_content"
+                        android:text="토익일정"
+                        android:onClick="pnggo3"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="25dp"/>
+                    <TextView
+                        android:id="@+id/png4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="조선대학교 컴퓨터공학과"
+                        android:onClick="pnggo4"
+                        android:background="@drawable/back"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_centerInParent="true"
+                        android:textSize="25sp"
+                        android:layout_marginBottom="25dp"/>
+                    <TextView
+                        android:id="@+id/png5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="네트워크 관리사 2급 기출"
+                        android:onClick="pnggo4"
+                        android:background="@drawable/back"
+                        android:gravity="center"
                         android:layout_gravity="center"
                         android:layout_centerInParent="true"
                         android:textSize="25sp"
@@ -185,16 +226,18 @@
                     <EditText
                         android:id="@+id/etsource"
                         android:layout_width="182dp"
+                        android:layout_marginBottom="25dp"
                         android:layout_height="wrap_content"
                         android:ems="10" >
                     </EditText>
 
                     <Button
                         android:id="@+id/bt_translate"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:text="번역" />
+                        android:text="번역"
+                        android:layout_marginBottom="25dp"
+                        android:textSize="18sp" />
                     <TextView
                         android:id="@+id/tv_result"
                         android:layout_width="match_parent"

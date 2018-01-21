@@ -17,7 +17,7 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {//테이블 생성
-        db.execSQL("CREATE TABLE LIKE_LIST( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price INTEGER);");
+        db.execSQL("CREATE TABLE LIKE_LIST( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price TEXT);");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class dbHelper extends SQLiteOpenHelper {
             str += "  "
                     + cursor.getString(1)//스트링값 받아서
                     + " 날짜 "
-                    + cursor.getInt(2)//int값 받아서
+                    + cursor.getString(2)//int값 받아서
                     + "\n";
         }
         return str;

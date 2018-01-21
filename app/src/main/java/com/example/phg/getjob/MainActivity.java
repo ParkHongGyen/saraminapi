@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,11 +30,6 @@ import java.net.URLEncoder;
 import java.util.Calendar;
 
 public class MainActivity extends TabActivity {
-
-    Button btdate; //날짜선택 버튼
-    CalendarView cal; // 달력
-    TextView etdate; // 날짜 결과
-
 
     TextView tvresult;//번역창
     EditText ettrans;//번역입력창
@@ -80,7 +73,7 @@ public class MainActivity extends TabActivity {
 
 
         final EditText etlike = (EditText)findViewById(R.id.etLike);//내용
-        etdate = (TextView)findViewById(R.id.etMemo);//날짜
+        final EditText etdate = (EditText) findViewById(R.id.etMemo);//날짜
         final TextView txresult = (TextView)findViewById(R.id.txResult);//결과창
 
         Button btnInsert = (Button) findViewById(R.id.btadd);//버튼 인식
@@ -124,26 +117,9 @@ public class MainActivity extends TabActivity {
         });
 
 
-      btdate = (Button)findViewById(R.id.bt_date);
-
-      cal = (CalendarView)findViewById(R.id.calendarView1);
-
-
-      CalendarViewListener listener = new CalendarViewListener();
-      cal.setOnDateChangeListener(listener);
-
-
     }////////////////////////////////////////////////////////oncreate
 
-    class CalendarViewListener implements CalendarView.OnDateChangeListener {
 
-        @Override
-        public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-
-            etdate.setText(i+(i1+1)+i2);
-
-        }
-    }
 
 
     /////////////////////////////////////////////////////////////////번역 클래스
@@ -239,6 +215,24 @@ public class MainActivity extends TabActivity {
     public void pnggo2(View v) //정보처리기사기출 이벤트
     {
         Uri uri = Uri.parse("http://www.q-net.or.kr/crf005.do?id=crf00503&jmCd=1320");//인터넷주소
+        Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
+        startActivity(it);//실행
+    }
+    public void pnggo3(View v) //토익일정 이벤트
+    {
+        Uri uri = Uri.parse("http://appexam.ybmnet.co.kr/toeic/info/receipt_schedule.asp");//인터넷주소
+        Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
+        startActivity(it);//실행
+    }
+    public void pnggo4(View v) //조선대 컴퓨터공학과 버튼
+    {
+        Uri uri = Uri.parse("http://www.chosun.ac.kr/user/indexMain.do?siteId=ce");//인터넷주소
+        Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
+        startActivity(it);//실행
+    }
+    public void pnggo5(View v) //네트워크 관리사 버튼
+    {
+        Uri uri = Uri.parse("http://www.comcbt.com/xe/jf");//인터넷주소
         Intent it  = new Intent(Intent.ACTION_VIEW,uri);//인텐트 설정
         startActivity(it);//실행
     }
