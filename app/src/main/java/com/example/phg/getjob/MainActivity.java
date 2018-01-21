@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,9 +33,13 @@ import java.util.Calendar;
 
 public class MainActivity extends TabActivity {
 
+    Button btdate; //날짜선택 버튼
+    CalendarView cal; // 달력
+    TextView etdate; // 날짜 결과
+
 
     TextView tvresult;//번역창
-    EditText ettrans;//입력창
+    EditText ettrans;//번역입력창
     Button bttranslate;//번역 버튼
 
     Button sb; //채용정보 검색 버튼튼
@@ -72,8 +78,9 @@ public class MainActivity extends TabActivity {
         ////////////////////////////////////////////////////////////DB
         final dbHelper dbHelp = new dbHelper(getApplicationContext(), "LIKE.db", null, 1);//db조건
 
-        final EditText etlike = (EditText)findViewById(R.id.etLike);//참조
-        final EditText etmemo = (EditText)findViewById(R.id.etMemo);//횟수
+
+        final EditText etlike = (EditText)findViewById(R.id.etLike);//내용
+        etdate = (TextView)findViewById(R.id.etMemo);//날짜
         final TextView txresult = (TextView)findViewById(R.id.txResult);//결과창
 
         Button btnInsert = (Button) findViewById(R.id.btadd);//버튼 인식
@@ -81,7 +88,7 @@ public class MainActivity extends TabActivity {
             @Override
             public void onClick(View v) {//추가 테이블명 이름, 숫자
                 String name = etlike.getText().toString();//스트링값 받음
-                String price = etmemo.getText().toString();//edittext에서 받는다
+                String price = etdate.getText().toString();//edittext에서 받는다
                 dbHelp.insert("insert into LIKE_LIST values(null, '" + name + "', " + price + ");");//Db에 insert한다
                 txresult.setText( dbHelp.PrintData() );//결과창
             }
@@ -102,8 +109,6 @@ public class MainActivity extends TabActivity {
         ettrans = (EditText)findViewById(R.id.etsource);
         bttranslate = (Button) findViewById(R.id.bt_translate);
 
-
-
         bttranslate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,41 +122,28 @@ public class MainActivity extends TabActivity {
                 asyncTask.execute(sText);
             }
         });
-////////////////////////////////////////////////////////선택한 날짜 값 구하기
-       /* calendar2 = Calendar.getInstance();
-        dYear = calendar2.get(Calendar.YEAR);
-        dMonth = calendar2.get(Calendar.MONTH);
-        dDay = calendar2.get(Calendar.DAY_OF_MONTH);*//* 선택 날짜 구하기 *//*
-        public void dateClick(View view) {
-            new DatePickerDialog(MainActivity.this, mDateSetListener, dYear, dMonth, dDay).show();
+
+
+      btdate = (Button)findViewById(R.id.bt_date);
+
+      cal = (CalendarView)findViewById(R.id.calendarView1);
+
+
+      CalendarViewListener listener = new CalendarViewListener();
+      cal.setOnDateChangeListener(listener);
+
+
+    }////////////////////////////////////////////////////////oncreate
+
+    class CalendarViewListener implements CalendarView.OnDateChangeListener {
+
+        @Override
+        public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+
+            etdate.setText(i+(i1+1)+i2);
+
         }
-*//*날짜 선택하여 값 계산*//*
-        DatePickerDialog.OnDateSetListener mDateSetListener=new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                dYear=year;
-                dMonth=monthOfYear;
-                dDay=dayOfMonth;
-//날짜값 가져옴
-                calendar2.set(Calendar.YEAR, dYear);
-                calendar2.set(Calendar.MONTH, dMonth);
-                calendar2.set(Calendar.DATE, dDay);
-//시간 분 초 로 나누면 일수로 됨
-                today=calendar.getTimeInMillis()/(24*60*60*1000);
-                dday=calendar2.getTimeInMillis()/(24*60*60*1000);
-                //1일의 값(86400000 = 24시간 * 60분 * 60초 * 1000(1초값))
-
-                result=today-dday; //선택날짜와 오늘날짜 뺌
-                result = result +1;//오늘 부터 1일로 계산
-                resultValue=(int)result;
-
-                UpdateDday();
-            }
-        };*/
-
-
-    } ////////////////////////////////////////////////////////oncreate
-
+    }
 
 
     /////////////////////////////////////////////////////////////////번역 클래스
@@ -234,7 +226,7 @@ public class MainActivity extends TabActivity {
            }
        }
    }
-
+//////////////////////////////////////////
 
 
     ///////////////////////////////////////////////////////////////////////페이지 버튼
@@ -251,7 +243,7 @@ public class MainActivity extends TabActivity {
         startActivity(it);//실행
     }
 
-//////////////////////////////////////////////////saramin액티비티
+//////////////////////////////////////////////////saramin액티비티 , 데이터 넘기기
     public void saramingo(View v){
         final RadioGroup rg = (RadioGroup)findViewById(R.id.radiogroup1);
         sb = (Button)findViewById(R.id.searchb); // 검색 버튼
@@ -265,69 +257,7 @@ public class MainActivity extends TabActivity {
         startActivity(it);
     }
 
-    /////////////////////////////////////////////////////////////////////네이버사전
 
-
-    /*class  NaverSearchTask  extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected String doInBackground(String... strings) {
-
-            String clientId = "qPRWHkJcumXLFGtvzWo2";//애플리케이션 클라이언트 아이디값";
-            String clientSecret = "yjQBWLhQ50";//애플리케이션 클라이언트 시크릿값";
-            String url = "https://openapi.naver.com/v1/papago/n2mt";
-            XmlPullParserFactory factory;
-            XmlPullParser parser;
-            URL xmlUrl = new URL(url);
-            String returnResult = "";
-            try{
-                boolean flag1 = false;
-
-                xmlUrl.openConnection().getInputStream();
-                factory = XmlPullParserFactory.newInstance();
-                parser = factory.newPullParser();
-                parser.setInput(xmlUrl.openStream(), "utf-8");
-                int eventType = parser.getEventType();
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    switch (eventType) {
-                        case XmlPullParser.START_DOCUMENT:
-                            break;
-                        case XmlPullParser.END_DOCUMENT:
-                            break;
-                        case XmlPullParser.START_TAG:
-                            if (parser.getName().equals("200")) {
-                                flag1 = true;
-                            }
-                            break;
-                        case XmlPullParser.END_TAG:
-                            break;
-                        case XmlPullParser.TEXT:
-                            if (flag1 == true) {
-                                returnResult += parser.getText()+"\n";
-                                flag1 = false;
-                            }
-                            break;
-                    }
-                    eventType = parser.next();
-                }
-            } catch (Exception e) {
-
-            }
-
-            return returnResult;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }
-
-    public void papago(View view) {
-        task = new NaverSearchTask();
-        task.execute(et1.getText().toString());
-        et1.setText("");
-    }*/
 //////////////////////////////////////////////////
 
 
