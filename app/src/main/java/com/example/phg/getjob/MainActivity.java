@@ -254,14 +254,14 @@ public class MainActivity extends TabActivity {
 //////////////////////////////////////////////////saramin액티비티
     public void saramingo(View v){
         final RadioGroup rg = (RadioGroup)findViewById(R.id.radiogroup1);
-        sb = (Button)findViewById(R.id.searchb);
+        sb = (Button)findViewById(R.id.searchb); // 검색 버튼
         int id = rg.getCheckedRadioButtonId();
-        RadioButton rb = (RadioButton) findViewById(id);
+        RadioButton rb = (RadioButton) findViewById(id); //라디오버튼
         String result = rb.getText().toString();
 
         Intent it = new Intent(getApplicationContext(), SaraminActivity.class);
 
-        it.putExtra("value", " result");
+        it.putExtra("value", result);
         startActivity(it);
     }
 
