@@ -40,8 +40,6 @@ public class SaraminActivity extends Activity implements OnClickListener {
 
         Intent it = getIntent();
         String data = it.getStringExtra("value");
-
-
         etsaram.setText(data);
     }
 
@@ -50,7 +48,12 @@ public class SaraminActivity extends Activity implements OnClickListener {
     class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
-            String url = "http://api.saramin.co.kr/job-search?keywords="; //사람인 제공 api의 url
+
+
+            String strText = etsaram.getText().toString() ;
+            String url = "http://api.saramin.co.kr/job-search?keywords="+strText; //사람인 제공 api의 url
+
+
             XmlPullParserFactory factory;
             XmlPullParser parser;
             URL xmlUrl;
@@ -58,7 +61,7 @@ public class SaraminActivity extends Activity implements OnClickListener {
             try {
                 boolean flag1 = false;
                 boolean flag2 = false;
-
+                boolean flag3 = false;
                 xmlUrl = new URL(url);
                 xmlUrl.openConnection().getInputStream();
                 factory = XmlPullParserFactory.newInstance();
@@ -75,8 +78,11 @@ public class SaraminActivity extends Activity implements OnClickListener {
                             if (parser.getName().equals("title")) {//대괄호 title이면 flag1 true
                                 flag1 = true;
                             }
-                            if (parser.getName().equals("industry")){ //대괄호 industry이면 flag2 true
+                            /*if (parser.getName().equals("position")){ //대괄호 industry이면 flag2 true
                                 flag2 = true;
+                            }*/
+                            if (parser.getName().equals("keyword")){ //대괄호 industry이면 flag3 true
+                                flag3 = true;
                             }
                             break;
 
@@ -87,10 +93,14 @@ public class SaraminActivity extends Activity implements OnClickListener {
                                 returnResult += parser.getText()+"\n";
                                 flag1 = false;
                             }
-                            if (flag2 == true){
+                          /*  if (flag2 == true){
                                 returnResult += parser.getText()+"\n";
                                 flag2 = false;
-                            }
+                            }*/
+                            if (flag3 == true){
+                            returnResult += parser.getText()+"\n"+"\n";
+                            flag3 = false;
+                        }
                             break;
                     }
                     eventType = parser.next();

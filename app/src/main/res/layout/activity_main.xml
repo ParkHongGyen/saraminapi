@@ -55,6 +55,20 @@
                         android:layout_weight="1"
                         android:textSize="18sp"
                         android:text="공채" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb4"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:text="서버"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rb5"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="웹개발"/>
                 </RadioGroup>
 
                 <Button
